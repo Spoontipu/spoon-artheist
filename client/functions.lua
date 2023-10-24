@@ -2,6 +2,8 @@
 ----------- FUNCTIONS -------------
 -----------------------------------
 
+local breakerAlarm = false
+
 function loadModel(model)
     local x, y, z, h = table.unpack(Config.SellLocation.pos)
 
@@ -78,6 +80,8 @@ end
 function playThermiteAnim()
     if Config.Debug then print("DEBUG: Playing thermal charge animation") end
 
+    local alertChance = math.random(1, 100)
+
     local ped = PlayerPedId()
     local coords = GetEntityCoords(ped)
     local dist = #(coords - Config.BreakerBox.pos)
@@ -114,4 +118,13 @@ function playThermiteAnim()
     Wait(3000)
     StopParticleFxLooped(effect, 0)
     DeleteObject(thermal_charge)
+
+    if not breakerAlarm and alertChance <= Config.AlertChance then
+        if Config.Dispatch == 'qb-dispatch' then
+            TriggerServerEvent('police:server:policeAlert', 'Explosion Reported')
+        elseif Config.Displach == 'ps-dispatch' then
+            exports['ps-dispatch']:Explosion()
+        end
+        breakerAlarm = true
+    end
 end

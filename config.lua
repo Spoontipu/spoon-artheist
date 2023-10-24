@@ -1,8 +1,18 @@
 Config = {}
 
+Config.Debug = true
+
 Config.RequiredPolice = 0
 
-Config.Debug = true
+----------------------------------------------------------------------------------
+-- Alert Chance is the chance that blowing the breaker is alerted to the police --
+----------------------------------------------------------------------------------
+Config.AlertChance = 100 -- This is % based. Default: 25%
+
+----------------------------------------------------
+-- Available Dispatches: qb-dispatch, ps-dispatch --
+----------------------------------------------------
+Config.Dispatch = 'qb-dispatch' 
 
 Config.SellLocation = {
     pos = vector4(241.01, 357.23, 105.59, 337.79),
