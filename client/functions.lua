@@ -23,9 +23,6 @@ end
 
 function loadAnim(anim)
     ---Plays animations on the players ped for tasks---
-    TriggerEvent('chat:addMessage', {
-        args = {'In playAnim()'}
-    })
     if HasAnimDictLoaded(anim) then return end
     RequestAnimDict(anim)
     repeat Wait(1) until HasAnimDictLoaded(anim)
