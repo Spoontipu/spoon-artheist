@@ -15,7 +15,7 @@ Config.BreakerBox = {
     minZ = 81.59,
     maxZ = 85.59,
     item = 'thermite',
-    thermiteLoc = vector3(30.28, 127.26, 85.08),
+    thermiteLoc = vector3(30.50, 127.61, 85.18),
 }
 
 Config.Rewards = {
