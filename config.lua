@@ -2,6 +2,8 @@ Config = {}
 
 Config.RequiredPolice = 0
 
+Config.Debug = true
+
 Config["Heist"] = {
     ["SellLocation"] = {
         pos = vector4(241.01, 357.23, 105.59, 337.79),
@@ -12,7 +14,6 @@ Config["Heist"] = {
         heading = 252,
         minZ = 81.59,
         maxZ = 85.59,
-        debug = true,
         item = 'thermite',
     },
     ["Rewards"] = {

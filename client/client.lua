@@ -48,7 +48,7 @@ function createBreaker()
     exports['qb-target']:AddBoxZone("ArtGalleryBreaker", pos, 1, 1, {
         name = "ArtGalleryBreaker",
         heading = 252,
-        debugPoly = Config['Heist']['BreakerBox']['debug'],
+        debugPoly = Config.Debug,
         minZ=81.59,
         maxZ=85.59,
     }, {
