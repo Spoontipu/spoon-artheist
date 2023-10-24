@@ -4,8 +4,8 @@ local breakerHit = false -- DO NOT TOUCH
 
 Citizen.CreateThread(function()
     ---Spawns the sell peds for every player---
-    local ped = Config['Heist']['SellLocation']['ped']
-
+    local ped = Config.SellLocation.ped
+    
     -- Load the sell ped
     loadModel(ped)
 

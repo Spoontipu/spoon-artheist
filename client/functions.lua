@@ -3,7 +3,7 @@
 -----------------------------------
 
 function loadModel(model)
-    local x, y, z, h = table.unpack(Config['Heist']['SellLocation']['pos'])
+    local x, y, z, h = table.unpack(Config.SellLocation.pos)
 
     ---Loads the model before spawning it to avoid errors---
     while not HasModelLoaded(GetHashKey(model)) do
@@ -21,22 +21,14 @@ function loadModel(model)
     end
 end
 
-function playAnim(animDict, anim, pid)
+function loadAnim(anim)
     ---Plays animations on the players ped for tasks---
     TriggerEvent('chat:addMessage', {
         args = {'In playAnim()'}
     })
-    -- RequestAnimDict("anim")
-    -- RequestAnimDict("anim@amb")
-    -- RequestAnimDict("anim@amb@nightclub")
-    -- RequestAnimDict("anim@amb@nightclub@poster@")
-    while (not HasAnimDictLoaded(animDict)) do
-        TriggerEvent('chat:addMessage', {
-            args = {'In loop'}
-        })
-        Citizen.Wait(10)
-    end
-    TaskPlayAnim(pid, animDict, anim, 1.0, -1.0, 5000, 0, 1, true, true, true)
+    if HasAnimDictLoaded(anim) then return end
+    RequestAnimDict(anim)
+    repeat Wait(1) until HasAnimDictLoaded(anim)
 end
 
 -- Removes create zones
@@ -51,8 +43,8 @@ end
 -- Creates the breaker box zone
 function createBreaker()
     ---Creates the starting breaker box for all players---
-    local pos = Config['Heist']['BreakerBox']['pos']
-    local reqItem = Config['Heist']['BreakerBox']['item']
+    local pos = Config.BreakerBox.pos
+    local reqItem = Config.BreakerBox.item
     exports['qb-target']:AddBoxZone("ArtGalleryBreaker", pos, 1, 1, {
         name = "ArtGalleryBreaker",
         heading = 252,
@@ -64,7 +56,7 @@ function createBreaker()
             {
                 type = "client",
                 event = "heist:client:HackBox",
-                icon = "fas fa-example",
+                icon = "fa-solid fa-ring",
                 label = "Blow Fuse",
                 item = reqItem,
             },

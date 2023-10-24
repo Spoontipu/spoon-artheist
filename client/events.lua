@@ -7,13 +7,17 @@ AddEventHandler('heist:client:HackBox', function(source)
     TriggerEvent('chat:addMessage', {
         args = {'heist:client:HackBox'}
     })
-    local pid = PlayerPedId()
-    local animDict = 'anim@amb@nightclub@poster@'
-    local anim = 'poster_placement'
-    playAnim(animDict, anim, pid)
+
+    local animDict = 'anim@heists@ornate_bank@thermal_charge'
+    local ped = PlayerPedId()
+    local coords = GetEntityCoords(ped)
+    local dist = #(coords - Config.BreakerBox.pos )
+    loadAnim(animDict)
+
+    --NetworkAddPedToSynchronisedScene
 
     -- Remove Breaker box zone
     removeBoxZone('ArtGalleryBreaker')
     
-    TriggerServerEvent('heist:server:startCooldown')
+    -- TriggerServerEvent('heist:server:startCooldown')
 end)
