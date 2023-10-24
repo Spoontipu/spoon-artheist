@@ -7,3 +7,8 @@ AddEventHandler('onResourceStart', function(resourceName)
 
     TriggerClientEvent("heist:server:startPed", -1)
   end)
+
+  RegisterNetEvent('heist:server:startCooldown')
+  AddEventHandler('heist:server:startCooldown', function()
+    
+  end)
