@@ -69,6 +69,12 @@ function createBreaker()
     end
 end
 
+function createPaintings()
+    if Config.Debug then print("DEBUG: Spawned painting props") end
+
+    
+end
+
 -- Loads particle effects
 function loadPtfx(name)
     if HasNamedPtfxAssetLoaded(name) then UseParticleFxAsset(name) return end
@@ -85,59 +91,64 @@ function playThermiteAnim(source)
     -- Checks if required cops are online
     QBCore.Functions.TriggerCallback('heist:server:checkCops', function(cops)
         if cops >= Config.RequiredPolice then
-            local alertChance = math.random(1, 100)
+            QBCore.Functions.TriggerCallback('heist:server:checkHeistTime', function(rob)
+                if rob then
+                    local alertChance = math.random(1, 100)
 
-            local ped = PlayerPedId()
-            local coords = GetEntityCoords(ped)
-            local dist = #(coords - Config.BreakerBox.pos)
-            local thermiteCoords = Config.BreakerBox.thermiteLoc
-            local rot = GetEntityRotation(ped)
-            local bagEmote = NetworkCreateSynchronisedScene(thermiteCoords.x, thermiteCoords.y, thermiteCoords.z, rot.x, rot.y, rot.z, 2, false, false, 1065353216, 0, 1.3)
-            local bag = CreateObject(`hei_p_m_bag_var22_arm_s`, thermiteCoords.x, thermiteCoords.y, thermiteCoords.z,  true,  true, false)
-            
-            -- Plays animation to place thermal charge
-            NetworkAddPedToSynchronisedScene(ped, bagEmote, 'anim@heists@ornate_bank@thermal_charge', 'thermal_charge', 1.5, -4.0, 1, 16, 1148846080, 0)
-            NetworkAddEntityToSynchronisedScene(bag, bagEmote, 'anim@heists@ornate_bank@thermal_charge', 'bag_thermal_charge', 4.0, -8.0, 1)
-            NetworkStartSynchronisedScene(bagEmote)
-            Wait(1500)
-
-            coords = GetEntityCoords(ped)
-            local thermal_charge = CreateObject(`hei_prop_heist_thermite`, coords.x, coords.y, coords.z + 0.2,  true,  true, true)
+                    local ped = PlayerPedId()
+                    local coords = GetEntityCoords(ped)
+                    local dist = #(coords - Config.BreakerBox.pos)
+                    local thermiteCoords = Config.BreakerBox.thermiteLoc
+                    local rot = GetEntityRotation(ped)
+                    local bagEmote = NetworkCreateSynchronisedScene(thermiteCoords.x, thermiteCoords.y, thermiteCoords.z, rot.x, rot.y, rot.z, 2, false, false, 1065353216, 0, 1.3)
+                    local bag = CreateObject(`hei_p_m_bag_var22_arm_s`, thermiteCoords.x, thermiteCoords.y, thermiteCoords.z,  true,  true, false)
                     
-            SetEntityCollision(thermal_charge, false, true)
-            AttachEntityToEntity(thermal_charge, ped, GetPedBoneIndex(ped, 28422), 0, 0, 0, 0, 0, 200.0, true, true, false, true, 1, true)
-            Wait(4000)
+                    -- Plays animation to place thermal charge
+                    NetworkAddPedToSynchronisedScene(ped, bagEmote, 'anim@heists@ornate_bank@thermal_charge', 'thermal_charge', 1.5, -4.0, 1, 16, 1148846080, 0)
+                    NetworkAddEntityToSynchronisedScene(bag, bagEmote, 'anim@heists@ornate_bank@thermal_charge', 'bag_thermal_charge', 4.0, -8.0, 1)
+                    NetworkStartSynchronisedScene(bagEmote)
+                    Wait(1500)
 
-            DetachEntity(thermal_charge, true, true)
-            FreezeEntityPosition(thermal_charge, true)
-            Wait(100)
-            DeleteObject(bag)
-            ClearPedTasks(ped)
+                    coords = GetEntityCoords(ped)
+                    local thermal_charge = CreateObject(`hei_prop_heist_thermite`, coords.x, coords.y, coords.z + 0.2,  true,  true, true)
+                            
+                    SetEntityCollision(thermal_charge, false, true)
+                    AttachEntityToEntity(thermal_charge, ped, GetPedBoneIndex(ped, 28422), 0, 0, 0, 0, 0, 200.0, true, true, false, true, 1, true)
+                    Wait(4000)
 
-            Wait(1000)
+                    DetachEntity(thermal_charge, true, true)
+                    FreezeEntityPosition(thermal_charge, true)
+                    Wait(100)
+                    DeleteObject(bag)
+                    ClearPedTasks(ped)
 
-            loadPtfx('scr_ornate_heist')
+                    Wait(1000)
 
-            local thermCoords = GetEntityCoords(thermal_charge)
-            local effect = StartParticleFxLoopedAtCoord('scr_heist_ornate_thermal_burn', thermCoords.x, thermCoords.y + 1.0, thermCoords.z, 0, 0, 0, 0x3F800000, false, false, false, false)
+                    loadPtfx('scr_ornate_heist')
 
-            -- Remove thermite from player inventory
-            TriggerServerEvent('heist:server:removeItem', 'thermite')
-            Wait(3000)
-            StopParticleFxLooped(effect, false)
-            DeleteObject(thermal_charge)
+                    local thermCoords = GetEntityCoords(thermal_charge)
+                    local effect = StartParticleFxLoopedAtCoord('scr_heist_ornate_thermal_burn', thermCoords.x, thermCoords.y + 1.0, thermCoords.z, 0, 0, 0, 0x3F800000, false, false, false, false)
 
-            -- Sends out a 911 dispatch to officers
-            if not breakerAlarm and alertChance <= Config.AlertChance then
-                if Config.Dispatch == 'qb-dispatch' then
-                    TriggerServerEvent('police:server:policeAlert', 'Explosion Reported')
-                elseif Config.Displach == 'ps-dispatch' then
-                    exports['ps-dispatch']:Explosion()
+                    -- Remove thermite from player inventory
+                    TriggerServerEvent('heist:server:removeItem', 'thermite')
+                    Wait(3000)
+                    StopParticleFxLooped(effect, false)
+                    DeleteObject(thermal_charge)
+
+                    -- Sends out a 911 dispatch to officers
+                    if not breakerAlarm and alertChance <= Config.AlertChance then
+                        if Config.Dispatch == 'qb-dispatch' then
+                            TriggerServerEvent('police:server:policeAlert', 'Explosion Reported')
+                        elseif Config.Displach == 'ps-dispatch' then
+                            exports['ps-dispatch']:Explosion()
+                        end
+                        breakerAlarm = true
+                    end
                 end
-                breakerAlarm = true
-            end
+            end)
         else
             QBCore.Functions.Notify('Not enough cops!', 'error', 5000)
         end
+        TriggerServerEvent('heist:server:finishHeist')
     end)
 end

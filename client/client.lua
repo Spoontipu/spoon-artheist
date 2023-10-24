@@ -11,6 +11,7 @@ Citizen.CreateThread(function()
 
     -- Create the breaker box players need to break
     createBreaker()
+    createPaintings()
 
     Wait(5000)
 end)

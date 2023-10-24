@@ -4,6 +4,8 @@ Config.Debug = true
 
 Config.RequiredPolice = 1
 
+Config.Cooldown = 1 -- Cooldown in minutes
+
 ----------------------------------------------------------------------------------
 -- Alert Chance is the chance that blowing the breaker is alerted to the police --
 ----------------------------------------------------------------------------------
