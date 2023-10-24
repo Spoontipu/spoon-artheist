@@ -5,7 +5,7 @@ Config.RequiredPolice = 0
 Config.Debug = true
 
 Config.SellLocation = {
-     pos = vector4(241.01, 357.23, 105.59, 337.79),
+    pos = vector4(241.01, 357.23, 105.59, 337.79),
     ped = 's_m_m_highsec_02',
 }
 
@@ -15,6 +15,7 @@ Config.BreakerBox = {
     minZ = 81.59,
     maxZ = 85.59,
     item = 'thermite',
+    thermiteLoc = vector3(30.28, 127.26, 85.08),
 }
 
 Config.Rewards = {
