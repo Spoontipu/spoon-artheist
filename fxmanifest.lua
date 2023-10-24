@@ -11,6 +11,7 @@ client_scripts {
 server_scripts {
     'server/callbacks.lua',
     'server/server.lua',
+    'server/events.lua',
 }
 
 shared_script 'config.lua'
