@@ -6,19 +6,19 @@ local QBCore = exports['qb-core']:GetCoreObject()
 
 local breakerAlarm = false
 
-function loadModel(model)
+function loadModel(ped)
     local x, y, z, h = table.unpack(Config.SellLocation.pos)
 
     ---Loads the model before spawning it to avoid errors---
-    while not HasModelLoaded(GetHashKey(model)) do
-        RequestModel(GetHashKey(model))
+    while not HasModelLoaded(GetHashKey(ped)) do
+        RequestModel(GetHashKey(ped))
         Citizen.Wait(50)
     end
 
-    local startPed = CreatePed(4, GetHashKey(ped), x, y, z-1, h, false, true)
-    FreezeEntityPosition(startPed, true)
-    SetEntityInvincible(startPed, true)
-    SetBlockingOfNonTemporaryEvents(startPed, true)
+    local sellPed = CreatePed(4, GetHashKey(ped), x, y, z-1, h, false, true)
+    FreezeEntityPosition(sellPed, true)
+    SetEntityInvincible(sellPed, true)
+    SetBlockingOfNonTemporaryEvents(sellPed, true)
 
     if Config.Debug then
         print("DEBUG: Ped has been loaded")

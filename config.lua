@@ -15,7 +15,7 @@ Config.AlertChance = 100 -- This is % based. Default: 25%
 Config.Dispatch = 'qb-dispatch' 
 
 Config.SellLocation = {
-    pos = vector4(241.01, 357.23, 105.59, 337.79),
+    pos = vector4(244.62, 374.69, 105.74, 162.77),
     ped = 's_m_m_highsec_02',
 }
 
