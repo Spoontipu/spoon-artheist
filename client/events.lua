@@ -8,7 +8,7 @@ AddEventHandler('heist:client:HackBox', function(source)
 
     loadAnim(animDict)
 
-    playThermiteAnim()
+    playThermiteAnim(source)
 
     -- Remove Breaker box zone
     removeBoxZone('ArtGalleryBreaker')
