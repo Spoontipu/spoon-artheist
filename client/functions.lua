@@ -52,6 +52,7 @@ end
 function createBreaker()
     ---Creates the starting breaker box for all players---
     local pos = Config['Heist']['BreakerBox']['pos']
+    local reqItem = Config['Heist']['BreakerBox']['item']
     exports['qb-target']:AddBoxZone("ArtGalleryBreaker", pos, 1, 1, {
         name = "ArtGalleryBreaker",
         heading = 252,
@@ -65,6 +66,7 @@ function createBreaker()
                 event = "heist:client:HackBox",
                 icon = "fas fa-example",
                 label = "Blow Fuse",
+                item = reqItem,
             },
         },
         distance = 2.5
