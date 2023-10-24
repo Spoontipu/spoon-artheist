@@ -3,13 +3,15 @@
 -----------------------------------
 
 function loadModel(model)
+    local x, y, z, h = table.unpack(Config['Heist']['SellLocation']['pos'])
+
     ---Loads the model before spawning it to avoid errors---
     while not HasModelLoaded(GetHashKey(model)) do
         RequestModel(GetHashKey(model))
         Citizen.Wait(50)
     end
 
-    startPed = CreatePed(4, GetHashKey(ped), x, y, z-1, h, false, true)
+    local startPed = CreatePed(4, GetHashKey(ped), x, y, z-1, h, false, true)
     FreezeEntityPosition(startPed, true)
     SetEntityInvincible(startPed, true)
     SetBlockingOfNonTemporaryEvents(startPed, true)
@@ -42,7 +44,7 @@ function removeBoxZone(zone)
     exports['qb-target']:RemoveZone(zone)
 
     if Config.Debug then
-        print("DEBUG: " .. zone .. " has been removed")
+        print("DEBUG: " .. zone .. " has been removed.")
     end
 end
 
@@ -67,4 +69,8 @@ function createBreaker()
         },
         distance = 2.5
     })
+
+    if Config.Debug then
+        print("DEBUG: ArtGalleryBreaker zone has been created.")
+    end
 end
