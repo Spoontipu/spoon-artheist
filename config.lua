@@ -2,7 +2,7 @@ Config = {}
 
 Config.Debug = true
 
-Config.RequiredPolice = 0
+Config.RequiredPolice = 1
 
 ----------------------------------------------------------------------------------
 -- Alert Chance is the chance that blowing the breaker is alerted to the police --
