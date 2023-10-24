@@ -21,8 +21,8 @@ function loadModel(model)
     end
 end
 
+---Plays animations on the players ped for tasks---
 function loadAnim(anim)
-    ---Plays animations on the players ped for tasks---
     if HasAnimDictLoaded(anim) then return end
     RequestAnimDict(anim)
     repeat Wait(1) until HasAnimDictLoaded(anim)
@@ -39,7 +39,6 @@ end
 
 -- Creates the breaker box zone
 function createBreaker()
-    ---Creates the starting breaker box for all players---
     local pos = Config.BreakerBox.pos
     local reqItem = Config.BreakerBox.item
     exports['qb-target']:AddBoxZone("ArtGalleryBreaker", pos, 1, 1, {
@@ -66,6 +65,7 @@ function createBreaker()
     end
 end
 
+-- Loads particle effects
 function loadPtfx(name)
     if HasNamedPtfxAssetLoaded(name) then UseParticleFxAsset(name) return end
     RequestNamedPtfxAsset(name)
@@ -74,6 +74,7 @@ function loadPtfx(name)
     UseParticleFxAsset(name)
 end
 
+-- Plays thermite animation with particle effects
 function playThermiteAnim()
     if Config.Debug then print("DEBUG: Playing thermal charge animation") end
 
