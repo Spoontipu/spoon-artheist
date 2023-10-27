@@ -9,11 +9,18 @@ AddEventHandler('heist:client:HackBox', function(source)
     loadAnim(animDict)
 
     playThermiteAnim(source)
+end)
 
-    -- Remove Breaker box zone
-    removeBoxZone('ArtGalleryBreaker')
-    
-    -- TriggerServerEvent('heist:server:startCooldown')
-    print("DEBUG: Creating breaker again")
-    createBreaker()
+RegisterNetEvent('heist:client:HackComputer')
+AddEventHandler('heist:client:HackComputer', function(source)
+    local animDict = 'anim@amb@business@cfid@cfid_desk_id@'
+    local ped = PlayerPedId()
+    loadAnim(animDict)
+
+    TaskPlayAnim(ped, animDict, 'light_investigation_driverslicense', 2, 2, 2, 1, 2, true, true, true)
+
+end)
+
+RegisterNetEvent('heist:client:syncHeistStart', function()
+    HeistStarted = not HeistStarted
 end)

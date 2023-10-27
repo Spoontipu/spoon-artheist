@@ -10,6 +10,13 @@ QBCore.Functions.CreateCallback('heist:server:checkCops', function(source, cb)
             amount = amount + 1
         end
     end
+
+    if amount >= Config.RequiredPolice then
+        cb(true)
+    else
+        TriggerClientEvent('QBCore:Notify', src, "Not enough cops!", 'error', 3000)
+        cb(false)
+    end
     cb(amount)
 end)
 

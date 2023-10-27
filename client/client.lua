@@ -1,6 +1,7 @@
 local QBCore = exports['qb-core']:GetCoreObject()
 
-local breakerHit = false -- DO NOT TOUCH
+BreakerHit = false -- DO NOT TOUCH
+HeistStarted = false
 
 Citizen.CreateThread(function()
     ---Spawns the sell peds for every player---
@@ -10,8 +11,10 @@ Citizen.CreateThread(function()
     loadModel(ped)
 
     -- Create the breaker box players need to break
-    createBreaker()
-    createPaintings()
+    createZones()
+
+    --createBreaker()
+    --createPaintings()
 
     Wait(5000)
 end)

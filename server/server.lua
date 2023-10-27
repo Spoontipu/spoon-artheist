@@ -1,8 +1,8 @@
 AddEventHandler('onResourceStart', function(resourceName)
     if (GetCurrentResourceName() ~= resourceName) then
-        print(GetCurrentResourceName() .. "========" .. resourceName)
       return
     end
+    print(GetCurrentResourceName() .. " has started.")
 
     TriggerClientEvent("heist:server:startPed", -1)
 

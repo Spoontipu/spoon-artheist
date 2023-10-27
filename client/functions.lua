@@ -41,16 +41,17 @@ function removeBoxZone(zone)
     end
 end
 
--- Creates the breaker box zone
-function createBreaker()
-    local pos = Config.BreakerBox.pos
-    local reqItem = Config.BreakerBox.item
-    exports['qb-target']:AddBoxZone("ArtGalleryBreaker", pos, 1, 1, {
+-- Creates all the box zones needed
+function createZones()
+    -- Create the breaker zone
+    local breakerPos = Config.BreakerBox.pos
+    local breakerItem = Config.BreakerBox.item
+    exports['qb-target']:AddBoxZone("ArtGalleryBreaker", breakerPos, 1, 1, {
         name = "ArtGalleryBreaker",
-        heading = 252,
+        heading = Config.BreakerBox.heading,
         debugPoly = Config.Debug,
-        minZ=81.59,
-        maxZ=85.59,
+        minZ=Config.BreakerBox.minZ,
+        maxZ=Config.BreakerBox.maxZ,
     }, {
         options = {
             {
@@ -58,14 +59,36 @@ function createBreaker()
                 event = "heist:client:HackBox",
                 icon = "fa-solid fa-ring",
                 label = "Blow Fuse",
-                item = reqItem,
+                item = breakerItem,
+            },
+        },
+        distance = 2.5
+    })
+
+    -- Create the computer zone
+    local computerPos = Config.Computer.pos
+    local computerItem = Config.Computer.item
+    exports['qb-target']:AddBoxZone("ArtGalleryComputer", computerPos, 1, 1, {
+        name = "ArtGalleryBreaker",
+        heading = Config.Computer.heading,
+        debugPoly = Config.Debug,
+        minZ=Config.Computer.minZ,
+        maxZ=Config.Computer.maxZ,
+    }, {
+        options = {
+            {
+                type = "client",
+                event = "heist:client:HackComputer",
+                icon = "fa-solid fa-ring",
+                label = "Hack Security Systems",
+                item = computerItem,
             },
         },
         distance = 2.5
     })
 
     if Config.Debug then
-        print("DEBUG: ArtGalleryBreaker zone has been created.")
+        print("DEBUG: Box zones have been created.")
     end
 end
 
@@ -90,7 +113,7 @@ function playThermiteAnim(source)
 
     -- Checks if required cops are online
     QBCore.Functions.TriggerCallback('heist:server:checkCops', function(cops)
-        if cops >= Config.RequiredPolice then
+        if cops then
             QBCore.Functions.TriggerCallback('heist:server:checkHeistTime', function(rob)
                 if rob then
                     local alertChance = math.random(1, 100)
@@ -146,8 +169,6 @@ function playThermiteAnim(source)
                     end
                 end
             end)
-        else
-            QBCore.Functions.Notify('Not enough cops!', 'error', 5000)
         end
         TriggerServerEvent('heist:server:finishHeist')
     end)
